@@ -24,10 +24,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
 
     public void openFragment(Fragment fragment, boolean value) {
-
-
         replaceFragment(fragment, R.id.layoutMain, true);
-
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener OnItemSelectedBottomBar = item -> {
