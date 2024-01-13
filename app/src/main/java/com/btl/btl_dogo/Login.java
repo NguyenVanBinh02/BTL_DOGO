@@ -1,25 +1,27 @@
 package com.btl.btl_dogo;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.btl.btl_dogo.databinding.ActivityKhoiDongBinding;
+import com.btl.btl_dogo.databinding.ActivityLoginBinding;
 
-public class KhoiDong extends AppCompatActivity {
-ActivityKhoiDongBinding binding;
+public class Login extends AppCompatActivity {
+    ActivityLoginBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= ActivityKhoiDongBinding.inflate(getLayoutInflater());
+        binding= ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.txtFooter.setOnClickListener(v->
         {
             startActivity(new Intent(getApplicationContext(), Register.class));
         });
-        binding.btnDangnhap.setOnClickListener(v->{
-            startActivity(new Intent(getApplicationContext(),Login.class));
+        binding.btnLogin.setOnClickListener(v->{
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
         });
+
     }
 }

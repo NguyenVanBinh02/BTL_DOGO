@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingConstraints"
+    tools:context=".Register">
+
+    <LinearLayout
+        android:id="@+id/header_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/back_register"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/baseline_arrow_back" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:text="Đăng ký tài khoản"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/body_register"
+        android:layout_width="347dp"
+        android:layout_height="585dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_background"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_register">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đăng ký"
+            android:textAlignment="center"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:src="@drawable/img" />
+
+        <EditText
+            android:id="@+id/txt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:drawableStart="@drawable/outline_account_user"
+            android:drawablePadding="@dimen/_6sdp"
+            android:hint="Name"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/txt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:drawableStart="@drawable/baseline_email"
+            android:drawablePadding="@dimen/_6sdp"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/txt_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:drawableStart="@drawable/baseline_local_phone1"
+            android:drawablePadding="@dimen/_6sdp"
+            android:hint="Phone"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/txt_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:drawableStart="@drawable/baseline_fmd_map"
+            android:drawablePadding="@dimen/_6sdp"
+            android:hint="Address"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/txt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:drawableStart="@drawable/baseline_password_24"
+            android:drawablePadding="@dimen/_6sdp"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="209dp"
+            android:layout_height="51dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:backgroundTint="#5DA6CF"
+            android:text="Đăng ký"
+            android:textSize="@dimen/_18sdp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_register">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bạn chưa có tài khoản?"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_footer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Đăng nhập"
+                android:textColor="#f00"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
