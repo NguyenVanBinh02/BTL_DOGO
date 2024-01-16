@@ -32,7 +32,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             case R.id.iconhome:
                 hideKeyboard();
 
-
                 return true;
             case R.id.ic_notification:
                 hideKeyboard();
