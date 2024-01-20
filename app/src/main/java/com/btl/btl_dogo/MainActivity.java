@@ -1,6 +1,8 @@
 package com.btl.btl_dogo;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 
 import androidx.fragment.app.Fragment;
 
@@ -31,7 +33,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         switch (item.getItemId()) {
             case R.id.iconhome:
                 hideKeyboard();
-
                 return true;
             case R.id.ic_notification:
                 hideKeyboard();
@@ -42,6 +43,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 return true;
             case R.id.ic_person:
                 hideKeyboard();
+                startActivity(new Intent(getApplicationContext(), Profile.class));
                 return true;
         }
         return false;

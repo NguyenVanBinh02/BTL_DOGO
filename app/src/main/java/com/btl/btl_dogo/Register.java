@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.btl.btl_dogo.databinding.ActivityRegisterBinding;
+import com.btl.btl_dogo.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;

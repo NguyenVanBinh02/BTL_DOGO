@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BTL_DOGO"
         tools:targetApi="31">
+
+        <activity
+            android:name=".Profile"
+            android:exported="false" />
         <activity
             android:name=".Login"
             android:exported="false" />

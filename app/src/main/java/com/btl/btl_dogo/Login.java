@@ -9,8 +9,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
-import com.btl.btl_dogo.databinding.ActivityKhoiDongBinding;
 import com.btl.btl_dogo.databinding.ActivityLoginBinding;
+import com.btl.btl_dogo.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
     ActivityLoginBinding binding;
-    DatabaseReference mDatabse;
+    DatabaseReference mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +33,14 @@ public class Login extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), KhoiDong.class));
         });
 
-        mDatabse= FirebaseDatabase.getInstance().getReference("users");
+        mDatabase= FirebaseDatabase.getInstance().getReference("users");
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = binding.txtEmail.getText().toString().trim();
                 String password = binding.txtPassword.getText().toString().trim();
-                if(!TextUtils.isEmpty("email")&& !TextUtils.isEmpty("password")){
-                    mDatabse.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                if(!TextUtils.isEmpty(email)&& !TextUtils.isEmpty(password)){
+                    mDatabase.orderByChild(email).equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.exists()){

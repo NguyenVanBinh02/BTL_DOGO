@@ -1,4 +1,4 @@
-package com.btl.btl_dogo;
+package com.btl.btl_dogo.model;
 
 public class User {
         private String name;
