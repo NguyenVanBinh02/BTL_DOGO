@@ -16,6 +16,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewbinding.ViewBinding;
 
+import com.btl.btl_dogo.model.User;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,14 +27,35 @@ import java.util.Locale;
 public abstract class BaseFragment<T extends ViewBinding> extends Fragment {
 
     protected T binding;
-   private OnBackPressedCallback callback;
+    private OnBackPressedCallback callback;
 
     public void handlerBackPressed() {
     }
-
+public FirebaseDatabase database = FirebaseDatabase.getInstance();
     public void showToast(String mess) {
         Toast.makeText(this.requireContext(), mess, Toast.LENGTH_LONG).show();
     }
+
+    public void getUserData(BaseActivity.OnGetUser event) {
+        String userID = preference.getString("UserID", "");
+
+        FirebaseDatabase.getInstance().getReference("users")
+                .child(userID)
+                .get()
+                .addOnSuccessListener(dataSnapshot -> {
+                    User user = dataSnapshot.getValue(User.class);
+
+                    if (user != null) {
+                        // User data retrieved successfully
+                        event.onGetSuccess(user);
+                    } else {
+                        // Handle the case where user is null
+                        showToast("User data is null");
+                    }
+                })
+                .addOnFailureListener(e -> showToast("Error: " + e.getMessage()));
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,9 +68,6 @@ public abstract class BaseFragment<T extends ViewBinding> extends Fragment {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
-
-
-
     public String formatToCurrency(float value) {
         Locale locale = new Locale("vi", "VN"); // Set the Vietnamese locale
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
@@ -60,15 +81,19 @@ public abstract class BaseFragment<T extends ViewBinding> extends Fragment {
         callback.remove();
     }
 
+    public SharedPreference preference;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = getBinding(inflater, container);
         return binding.getRoot();
+
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        preference = new SharedPreference(requireContext());
         initView();
     }
 
@@ -89,6 +114,7 @@ public abstract class BaseFragment<T extends ViewBinding> extends Fragment {
         }
         ((BaseActivity<?>) requireActivity()).replaceFragment(fragment, viewId, addToBackStack);
     }
+
     public String getTimeNow() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         return sdf.format(new Date());
