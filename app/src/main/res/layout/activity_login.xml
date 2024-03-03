@@ -70,15 +70,28 @@
             android:hint="Email"
             android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/txt_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:drawableStart="@drawable/baseline_password_24"
-            android:drawablePadding="@dimen/_6sdp"
-            android:hint="Password"
-            android:inputType="textPassword" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/txt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:drawableStart="@drawable/baseline_password_24"
+                android:drawablePadding="@dimen/_6sdp"
+                android:hint="Password"
+                android:inputType="textPassword" />
+
+            <ImageView
+                android:id="@+id/showPasswordIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="14dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/outline_remove" />
+        </RelativeLayout>
 
         <Button
             android:id="@+id/btn_login"
