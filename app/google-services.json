@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "822149508713",
+    "project_id": "btl-dogo",
+    "storage_bucket": "btl-dogo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822149508713:android:a410dc8bd985ddc97dfcf8",
+        "android_client_info": {
+          "package_name": "com.btl.btl_dogo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq-Z9jHF5ZDUcT72jV09otJ9wZFUphD7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
