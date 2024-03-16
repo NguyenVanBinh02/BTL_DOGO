@@ -34,6 +34,9 @@ public class DetailsFragment extends BaseFragment<FragmentDetailsBinding> {
         binding.ingBack.setOnClickListener(v -> closeFragment(DetailsFragment.this));
         binding.txtSp.setText(product.Ten);
         binding.txtGia.setText(String.valueOf(product.Gia));
+        binding.txtMota.setText(product.MotaSP);
+        binding.txtChatLieu.setText("Chất liệu: "+product.ChatLieu);
+        binding.txtXuatSu.setText("Nơi sản xuất: "+product.NoiSX);
         ArrayList<Comment> listComment = new ArrayList<>();
         listComment.add(new Comment("ghe", "tot", "", "dung"));
         listComment.add(new Comment("ghe", "tot", "", "dung"));
@@ -41,8 +44,18 @@ public class DetailsFragment extends BaseFragment<FragmentDetailsBinding> {
 
         binding.listComment.setAdapter(commentAdapter);
 //        commentAdapter.setItems(listComment);
-
-
+        binding.txtAdd.setOnClickListener(v -> {
+            int add = Integer.parseInt(binding.txtSL.getText().toString());
+            add ++;
+            binding.txtSL.setText(String.valueOf(add));
+        });
+        binding.txtRemove.setOnClickListener(v -> {
+            int remove = Integer.parseInt(binding.txtSL.getText().toString());
+            if (remove >1) {
+                remove--;
+                binding.txtSL.setText(String.valueOf(remove));
+            }
+        });
     }
 
 

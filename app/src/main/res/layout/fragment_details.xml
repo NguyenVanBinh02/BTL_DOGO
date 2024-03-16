@@ -139,7 +139,7 @@
                 android:background="@drawable/rounded_edittext_bg"
                 android:text="Mo ta san pham"/>
             <LinearLayout
-                android:layout_width="@dimen/_300sdp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:orientation="vertical">
@@ -148,7 +148,7 @@
                     android:id="@+id/txtMota"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Mo ta chi tiet ueiejhdjdidoiejdoieh dbeu ddehd duehdue dued bdeuhued ubueh dbeudube eudbbe bdeubdue bdeudb beuu "
+                    android:text="Mo ta chi tiet "
                     android:textSize="@dimen/_14sdp"
                     tools:ignore="InvalidId" />
 
@@ -166,6 +166,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
                     android:text="Chat lieu: Go xoan"
+                    android:textSize="@dimen/_14sdp" />
+                <TextView
+                    android:id="@+id/txtXuatSu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:text="XUat su: Viet Nam"
                     android:textSize="@dimen/_14sdp" />
             </LinearLayout>
 
