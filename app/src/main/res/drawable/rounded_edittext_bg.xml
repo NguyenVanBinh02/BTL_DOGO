@@ -5,6 +5,6 @@
     <corners android:radius="10dp" /> <!-- Điều chỉnh độ cong ở đây -->
 
     <stroke
-        android:color="#F5F5F5"
+        android:color="#F6F5F5"
         android:width="2dp" />
 </shape>

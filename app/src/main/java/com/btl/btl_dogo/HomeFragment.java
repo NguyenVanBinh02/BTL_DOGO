@@ -86,11 +86,16 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements T
         adapterTag.setItems(listTag);
 
 
-        arrayList.add(new Product("", "Ghe 1", "ghe"));
-        arrayList.add(new Product("", "Sach 1", "tu"));
-        arrayList.add(new Product("", "Ghe 2", "ghe"));
-        arrayList.add(new Product("", "Ban1 1", "ke"));
-        arrayList.add(new Product("", "Ban 2", "ban"));
+        arrayList.add(new Product("", "Ghe 1", "ghe", "12.500.000"));
+        arrayList.add(new Product("", "Ghe 2", "ghe", "10.000.000"));
+        arrayList.add(new Product("", "Ban 1", "ban", "8.000.000"));
+        arrayList.add(new Product("", "Ban 2", "ban", "9.500.000"));
+        arrayList.add(new Product("", "Tu 1", "tu", "15.000.000"));
+        arrayList.add(new Product("", "Tu 2", "tu", "18.000.000"));
+        arrayList.add(new Product("", "Ke 2", "ke", "18.500.000"));
+        arrayList.add(new Product("", "Ke 3", "ke", "22.000.000"));
+        arrayList.add(new Product("", "Ke 4", "ke", "15.800.000"));
+
         binding.listProduct.setAdapter(productAdater);
         productAdater.setItems(arrayList);
     }
