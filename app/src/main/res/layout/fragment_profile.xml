@@ -8,8 +8,8 @@
     tools:context=".ProfileFragment">
     <LinearLayout
         android:id="@+id/nav_Profile"
-        android:layout_width="387dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_height="@dimen/_50sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:background="@drawable/rounded_header"

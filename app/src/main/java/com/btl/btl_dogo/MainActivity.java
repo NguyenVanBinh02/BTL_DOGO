@@ -33,6 +33,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 openFragment(new HomeFragment(viewModel));
                 return true;
             case R.id.ic_notification:
+                openFragment(new NotifileFragment());
                 hideKeyboard();
 
                 return true;

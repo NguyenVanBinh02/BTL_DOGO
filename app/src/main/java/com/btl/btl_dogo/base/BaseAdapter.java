@@ -2,9 +2,12 @@ package com.btl.btl_dogo.base;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
+
+import com.bumptech.glide.Glide;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -41,7 +44,9 @@ public abstract class BaseAdapter<T, VB extends ViewBinding> extends RecyclerVie
     public int getItemCount() {
         return listItem.size();
     }
-
+    public void LoadImg(Object img, ImageView view){
+        Glide.with(view.getContext()).load(img).into(view);
+    }
     protected abstract void bind(VB binding, T item, int position);
 
     public void setItems(ArrayList<T> items) {

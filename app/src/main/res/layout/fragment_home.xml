@@ -51,8 +51,8 @@
         </LinearLayout>
         <ImageView
             android:id="@+id/img_cart"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_26sdp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_weight="1"
             android:src="@drawable/baseline_shopping_cart"
             app:tint="@color/white" />
