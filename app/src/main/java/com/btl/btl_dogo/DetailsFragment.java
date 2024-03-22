@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.btl.btl_dogo.adapter.CommentAdapter;
+import com.btl.btl_dogo.adapter.ProductAdater;
 import com.btl.btl_dogo.adapter.SPLQAdapter;
 import com.btl.btl_dogo.base.BaseAdapter;
 import com.btl.btl_dogo.base.BaseFragment;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 public class DetailsFragment extends BaseFragment<FragmentDetailsBinding> {
     private Product product;
     CommentAdapter commentAdapter;
+    ProductAdater productAdater;
     SPLQAdapter splqAdapter;
     public DetailsFragment(Product product) {
         this.product = product;
@@ -33,11 +35,27 @@ public class DetailsFragment extends BaseFragment<FragmentDetailsBinding> {
 
     @Override
     protected void initView() {
+            productAdater= new ProductAdater(new ProductAdater.ProductEvent() {
 
+                @Override
+                public void onLove(Product pr) {
+
+                }
+
+                @Override
+                public void onDetail(Product product) {
+
+                }
+
+                @Override
+                public void onAddCart(Product product) {
+                addToCart(product);
+                }
+            });
         splqAdapter = new SPLQAdapter(new SPLQAdapter.ProductEvent() {
             @Override
             public void onDetail(Product product) {
-
+                replaceFragment(new DetailsFragment(product),android.R.id.content,true);
             }
         });
         binding.relatedProducts.setAdapter(splqAdapter);

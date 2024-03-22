@@ -29,5 +29,6 @@ public class SPLQAdapter extends BaseAdapter<Product, ListSplqBinding> {
         LoadImg(item.img==""?R.drawable.img_1:item.img,binding.imgSplq);
         binding.txtSp.setText(item.Ten);
         binding.txtGia.setText(String.valueOf(item.Gia));
+        binding.getRoot().setOnClickListener(v->event.onDetail(item));
     }
 }

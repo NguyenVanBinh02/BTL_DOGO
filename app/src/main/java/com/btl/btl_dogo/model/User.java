@@ -3,7 +3,17 @@ package com.btl.btl_dogo.model;
 import java.io.Serializable;
 
 public class User implements Serializable {
-        private String name;
+    private String Id;
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
+
+    private String name;
         private String email;
         private String phone;
         private String address;
@@ -14,7 +24,8 @@ public class User implements Serializable {
             // Default constructor required for calls to DataSnapshot.getValue(User.class)
         }
 
-        public User(String name, String email, String phone, String address, String password) {
+        public User(String id,String name, String email, String phone, String address, String password) {
+            this.Id=id;
             this.name = name;
             this.email = email;
             this.phone = phone;

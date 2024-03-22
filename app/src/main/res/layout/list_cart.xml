@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/rounded_comment"
+    android:layout_marginTop="@dimen/_4sdp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -27,8 +28,8 @@
         android:id="@+id/cardView"
         android:layout_toEndOf="@id/checkbox"
         android:layout_centerVertical="true"
-        android:layout_width="@dimen/_120sdp"
-        android:layout_height="@dimen/_120sdp"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
         android:backgroundTint="#E3E0E0"
         android:paddingRight="@dimen/_8sdp"
         app:cardCornerRadius="@dimen/_8sdp"

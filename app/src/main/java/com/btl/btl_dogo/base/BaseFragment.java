@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,6 +20,9 @@ import androidx.viewbinding.ViewBinding;
 import com.btl.btl_dogo.model.Product;
 import com.btl.btl_dogo.model.User;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.NumberFormat;
@@ -39,6 +43,7 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
         Toast.makeText(this.requireContext(), mess, Toast.LENGTH_LONG).show();
     }
 
+    public User userLogin= null;
     public void getUserData(BaseActivity.OnGetUser event) {
         String userID = preference.getString("UserID", "");
 
@@ -49,7 +54,7 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
                     User user = dataSnapshot.getValue(User.class);
 
                     if (user != null) {
-                        // User data retrieved successfully
+                        userLogin= user;
                         event.onGetSuccess(user);
                     } else {
                         // Handle the case where user is null
@@ -218,6 +223,68 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
         super.onViewCreated(view, savedInstanceState);
         preference = new SharedPreference(requireContext());
         initView();
+    }
+
+
+
+    public void addToCart(Product product) {
+        if(userLogin!=null){
+            database.getReference("Card")
+                    .child(userLogin.getId())
+                    .push()
+                    .setValue(product)
+                    .addOnSuccessListener(unused -> {
+                        showToast("Đã thêm vào giỏ hàng thành công");
+                    }).addOnFailureListener(e -> {
+                        showToast("Error: "+e.getMessage());
+                    });
+        }
+        else {
+            showToast("User loggin is null");
+        }
+    }
+
+    public interface OnEventListener{
+        void onSuccess();
+    }
+    public interface FectchCartByUser{
+        void onSuccess(ArrayList<Product> products);
+    }
+    public void removeCard(Product product, OnEventListener ev) {
+        if(userLogin!=null){
+            database.getReference("Card")
+                    .child(userLogin.getId())
+                    .child(product.Id)
+                    .removeValue()
+                    .addOnSuccessListener(unused -> {
+                        showToast("Đã xóa thành công");
+                        ev.onSuccess();
+                    }).addOnFailureListener(e -> {
+                        showToast("Error: "+e.getMessage());
+                    });
+        }
+        else {
+            showToast("User loggin is null");
+        }
+    }
+
+    public void getListCard(User user,FectchCartByUser arr){
+        if(user!=null){
+            database.getReference("Card")
+                    .child(user.getId())
+                    .get()
+                    .addOnSuccessListener(dataSnapshot -> {
+                        ArrayList<Product> fetchPr= new ArrayList<>();
+                        for (DataSnapshot doc:dataSnapshot.getChildren()){
+                            fetchPr.add(doc.getValue(Product.class));
+                        }
+                        arr.onSuccess(fetchPr);
+                    })
+                    .addOnFailureListener(e -> showToast("Err: "+e.getMessage()));
+        }
+        else {
+            showToast("User loggin is null");
+        }
     }
 
     protected abstract T getBinding(LayoutInflater inflater, ViewGroup container);

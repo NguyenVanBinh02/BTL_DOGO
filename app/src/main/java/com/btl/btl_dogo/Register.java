@@ -65,23 +65,22 @@ public class Register extends AppCompatActivity {
 
                 if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(phone) &&
                         !TextUtils.isEmpty(address) && !TextUtils.isEmpty(password)) {
+
+                  DatabaseReference ref=  FirebaseDatabase.getInstance().getReference("users").push();
                     // Create a new User object
-                    User newUser = new User(name, email, phone, address, password);
+                    User newUser = new User(ref.getKey(),name, email, phone, address, password);
 
                     // Save data to Firebase Realtime Database
-                    mDatabase.push().setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                // If successful, display a success message and navigate to the login screen
-                                Toast.makeText(Register.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), Login.class));
-                            } else {
-                                // If unsuccessful, display an error message
-                                Toast.makeText(Register.this, "Đăng ký thất bại. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                   ref.setValue(newUser).addOnCompleteListener(task -> {
+                       if (task.isSuccessful()) {
+                           // If successful, display a success message and navigate to the login screen
+                           Toast.makeText(Register.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                           startActivity(new Intent(getApplicationContext(), Login.class));
+                       } else {
+                           // If unsuccessful, display an error message
+                           Toast.makeText(Register.this, "Đăng ký thất bại. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+                       }
+                   });
                 } else {
                     // If there are empty input fields, display a message
                     Toast.makeText(Register.this, "Vui lòng nhập đầy đủ thông tin.", Toast.LENGTH_SHORT).show();

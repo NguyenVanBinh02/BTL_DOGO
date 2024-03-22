@@ -16,6 +16,8 @@ public class CartAdapter extends BaseAdapter<Product, ListCartBinding> {
 
     public  interface  ProductEvent{
         void onDetail(Product product);
+        void onAdd(Product pr);
+        void onRemove(Product product);
     }
     final ProductEvent event;
     @Override
@@ -25,8 +27,11 @@ public class CartAdapter extends BaseAdapter<Product, ListCartBinding> {
 
     @Override
     protected void bind(ListCartBinding binding, Product item, int position) {
-    LoadImg(item.img==""? R.drawable.img_3:item.img,binding.imgCart);
+    LoadImg(item.img.trim().equals("")? R.drawable.img_3:item.img,binding.imgCart);
     binding.txtGia.setText(String.valueOf(item.Gia));
     binding.txtName.setText(item.Ten);
+    binding.txtAdd.setOnClickListener(v -> event.onAdd(item));
+    binding.getRoot().setOnClickListener(v->event.onDetail(item));
+    binding.txtRemove.setOnClickListener(v -> event.onRemove(item));
     }
 }

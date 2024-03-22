@@ -38,6 +38,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
                 return true;
             case R.id.ic_favorite:
+                openFragment(new LoveFragment());
                 hideKeyboard();
                 return true;
             case R.id.ic_person:

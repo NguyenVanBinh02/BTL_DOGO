@@ -55,7 +55,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements T
 
             @Override
             public void onAddCart(Product product) {
-                showToast("Add");
+                addToCart(product);
             }
         });
         binding.imgCart.setOnClickListener(v -> {
@@ -90,6 +90,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements T
         binding.listProduct.setAdapter(productAdater);
         productAdater.setItems(getListProduct());
     }
+
 
 
     @Override
