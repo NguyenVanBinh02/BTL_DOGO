@@ -22,6 +22,7 @@
         <ImageView
             android:id="@+id/img_logo"
             android:layout_width="0dp"
+            android:layout_marginStart="@dimen/_4sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_weight="1"
             android:src="@drawable/img" />
