@@ -33,6 +33,8 @@ public class Login extends BaseActivity<ActivityLoginBinding> {
 
     @Override
     protected void createView() {
+
+
         binding.txtFooter.setOnClickListener(v ->
         {
             startActivity(new Intent(getApplicationContext(), Register.class));

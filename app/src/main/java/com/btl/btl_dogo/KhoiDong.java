@@ -18,7 +18,13 @@ ActivityKhoiDongBinding binding;
         setContentView(binding.getRoot());
         preference= new SharedPreference(getApplicationContext());
         if (preference.getBoolean("khoidong",false)){
-            startActivity(new Intent(getApplicationContext(),Login.class));
+            if(!preference.getString("UserID","").equals("")){
+                startActivity(new Intent(KhoiDong.this,MainActivity.class));
+            }
+            else {
+                startActivity(new Intent(getApplicationContext(),Login.class));
+            }
+
         }
         binding.txtFooter.setOnClickListener(v->
         {

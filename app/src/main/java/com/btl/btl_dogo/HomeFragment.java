@@ -44,7 +44,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements T
         productAdater = new ProductAdater(new ProductAdater.ProductEvent() {
             @Override
             public void onLove(Product pr) {
-                showToast("Love");
+                onLoveSp(pr, aBoolean -> {
+                    if(aBoolean){
+                        showToast("Đã thêm vào danh sách yêu thích!");
+                    }
+                });
             }
 
             @Override
