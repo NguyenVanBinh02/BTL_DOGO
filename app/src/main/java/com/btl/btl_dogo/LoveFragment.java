@@ -27,6 +27,12 @@ public class LoveFragment extends BaseFragment<FragmentLoveBinding> {
     private LoveAdapter adapter;
     @Override
     protected void initView() {
+        binding.imgCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(new CartFragment(),android.R.id.content,true);
+            }
+        });
         adapter= new LoveAdapter(new LoveAdapter.ProductEvent() {
             @Override
             public void onDelete(Product pr) {

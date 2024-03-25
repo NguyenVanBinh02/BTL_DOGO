@@ -33,7 +33,7 @@
             android:text="Thông báo"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/_18sdp"
+            android:textSize="@dimen/_16sdp"
             android:textStyle="bold" />
 
         <ImageView

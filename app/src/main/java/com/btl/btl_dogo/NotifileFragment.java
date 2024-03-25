@@ -2,6 +2,7 @@ package com.btl.btl_dogo;
 
 import android.os.Build;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,12 @@ public class NotifileFragment extends BaseFragment<FragmentNotifileBinding> {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void initView() {
+        binding.imgLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(new CartFragment(),android.R.id.content,false);
+            }
+        });
         notificationAdapter = new NotificationAdapter();
         binding.rcvNotification.setAdapter(notificationAdapter);
         getAllNoti(notifications -> {
@@ -62,4 +69,5 @@ public class NotifileFragment extends BaseFragment<FragmentNotifileBinding> {
             }
         });
     }
+
 }
