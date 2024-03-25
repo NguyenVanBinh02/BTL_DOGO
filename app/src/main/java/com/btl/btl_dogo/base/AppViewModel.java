@@ -6,4 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 public class AppViewModel extends ViewModel {
     public MutableLiveData<Boolean> isFocusSerch = new MutableLiveData<>(false);
+
+
+    public MutableLiveData<Boolean> isAddComment= new MutableLiveData<>(false);
 }

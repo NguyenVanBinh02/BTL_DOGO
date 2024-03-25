@@ -6,19 +6,17 @@ import android.view.ViewGroup;
 import androidx.core.util.Consumer;
 
 import com.btl.btl_dogo.adapter.CommentAdapter;
-import com.btl.btl_dogo.base.BaseActivity;
 import com.btl.btl_dogo.base.BaseFragment;
 import com.btl.btl_dogo.databinding.FragmentWritercommentBinding;
 import com.btl.btl_dogo.model.Comment;
 import com.btl.btl_dogo.model.Product;
-import com.btl.btl_dogo.model.User;
-
-import java.util.ArrayList;
 
 public class WriteCommentFragment extends BaseFragment<FragmentWritercommentBinding> {
 CommentAdapter commentAdapter;
+final Consumer<Comment> consumer ;
 
-    public WriteCommentFragment(Product product) {
+    public WriteCommentFragment(Consumer<Comment> consumer, Product product) {
+        this.consumer = consumer;
         this.product = product;
     }
 
@@ -30,26 +28,37 @@ CommentAdapter commentAdapter;
 
     @Override
     protected void initView() {
-        binding.imgCart.setOnClickListener(v->{
-            replaceFragment(new CartFragment(),android.R.id.content,false);
+        binding.imgBack.setOnClickListener(v-> {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(
+                            R.anim.slide_in,
+                            R.anim.fade_out,
+                            R.anim.fade_in,
+                            R.anim.slide_out
+                    )
+                    .remove(WriteCommentFragment.this)
+                    .commit();
+            hideKeyboard();
         });
-        binding.imgBack.setOnClickListener(v-> closeFragment(WriteCommentFragment.this));
         commentAdapter =new CommentAdapter();
         getComment(product, comments -> commentAdapter.setItems(comments));
         binding.rcvNotification.setAdapter(commentAdapter);
         binding.btnSend.setOnClickListener(v->{
             String cmt = binding.txtComment.getText().toString();
 
-            getUserData(us -> {
-                Comment valCmt = new Comment("","",cmt, us.getId(),us.getName(),getTimeNow());
-                addComment(product.Id, valCmt, new Consumer<Void>() {
-                    @Override
-                    public void accept(Void unused) {
-                        binding.txtComment.setText("");
-                    }
+            if(!cmt.isEmpty()){
+                getUserData(us -> {
+
+                    Comment valCmt = new Comment("","",cmt, us.getId(),us.getName(),getTimeNow());
+                    addComment(product.Id, valCmt, unused -> binding.txtComment.setText(""));
+                    consumer.accept(valCmt);
+                    commentAdapter.addItem(valCmt,0);
+
                 });
-            });
+
+            }
         });
     }
 
 }
+//

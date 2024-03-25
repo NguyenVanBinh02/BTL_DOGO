@@ -2,15 +2,12 @@ package com.btl.btl_dogo;
 
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.util.Consumer;
 
 import com.btl.btl_dogo.adapter.CommentAdapter;
-import com.btl.btl_dogo.adapter.ProductAdater;
 import com.btl.btl_dogo.adapter.SPLQAdapter;
-import com.btl.btl_dogo.base.BaseAdapter;
 import com.btl.btl_dogo.base.BaseFragment;
 import com.btl.btl_dogo.databinding.FragmentDetailsBinding;
 import com.btl.btl_dogo.model.CardProduct;
@@ -35,11 +32,15 @@ public class DetailsFragment extends BaseFragment<FragmentDetailsBinding> {
     CardProduct cart;
     @Override
     protected void initView() {
+
+
         binding.btnThemSP.setOnClickListener(v->{
             addToCart(cart);
         });
         binding.btnChiTiet.setOnClickListener(v->{
-            replaceFragment( new WriteCommentFragment(product),android.R.id.content,false);
+            addFragment( new WriteCommentFragment(comment -> {
+                commentAdapter.addItem(comment,0);
+            }, product),android.R.id.content,false);
         });
         cart = new CardProduct(product.Id, product,1,product.Gia,false);
         binding.txtSL.setText(""+ cart.Count);
@@ -52,17 +53,21 @@ public class DetailsFragment extends BaseFragment<FragmentDetailsBinding> {
         binding.relatedProducts.setAdapter(splqAdapter);
         splqAdapter.setItems(getSPLQ());
         commentAdapter =new CommentAdapter();
-        binding.ingBack.setOnClickListener(v -> closeFragment(DetailsFragment.this));
+        binding.ingBack.setOnClickListener(v -> {
+            closeFragment(DetailsFragment.this);
+        });
         loadImg(product.img==""?R.drawable.img_1:product.img,binding.imgSp);
         binding.txtSp.setText(product.Ten);
         binding.txtGia.setText(String.valueOf(product.Gia));
         binding.txtMota.setText(product.MotaSP);
         binding.txtChatLieu.setText("Chất liệu: "+product.ChatLieu);
         binding.txtXuatSu.setText("Nơi sản xuất: "+product.NoiSX);
-        ArrayList<Comment> listComment = new ArrayList<>();
 
         binding.listComment.setAdapter(commentAdapter);
-        commentAdapter.setItems(listComment);
+        getComment(product, comments -> {
+            commentAdapter.setItems(comments);
+        });
+
         binding.txtAdd.setOnClickListener(v -> {
            cart.Count++;
             binding.txtSL.setText(""+ cart.Count);

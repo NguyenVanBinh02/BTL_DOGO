@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.util.Consumer;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
 
 import com.btl.btl_dogo.R;
@@ -48,12 +49,15 @@ public abstract class BaseFragment<T extends ViewBinding> extends Fragment {
 
     public void handlerBackPressed() {
     }
-public FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public AppViewModel viewModel;
+    public FirebaseDatabase database = FirebaseDatabase.getInstance();
+
     public void showToast(String mess) {
         Toast.makeText(this.requireContext(), mess, Toast.LENGTH_LONG).show();
     }
 
-    public User userLogin= null;
+    public User userLogin = null;
+
     public void getUserData(BaseActivity.OnGetUser event) {
         String userID = preference.getString("UserID", "");
 
@@ -64,7 +68,7 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
                     User user = dataSnapshot.getValue(User.class);
 
                     if (user != null) {
-                        userLogin= user;
+                        userLogin = user;
                         event.onGetSuccess(user);
                     } else {
                         // Handle the case where user is null
@@ -73,128 +77,126 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
                 })
                 .addOnFailureListener(e -> showToast("Error: " + e.getMessage()));
     }
-    public ArrayList<Product> getListProduct(){
-        ArrayList<Product> arrayList= new ArrayList<>();
+
+    public ArrayList<Product> getListProduct() {
+        ArrayList<Product> arrayList = new ArrayList<>();
         //String id, String ten, String tenLoai, String gia, String noiSX, String motaSP, String kichThuoc, String chatLieu, String img
 
 //  1
         arrayList.add(new Product("product_1", "Ghế 1", "ghe", "9.500",
                 "Italy", "Ghế ngồi êm ái với đệm lót bằng mút cao cấp và vải bọc mềm mại, thích hợp cho gia đình hoặc văn phòng.",
-                "50*60*80 cm", "Gỗ xoan",""));
+                "50*60*80 cm", "Gỗ xoan", ""));
 
 //  2
         arrayList.add(new Product("product_2", "Ghế 2", "ghe", "8.000",
                 "France", "Ghế ngồi thoải mái với chất liệu gỗ tự nhiên và đệm mút mềm mại.",
-                "45*55*75 cm", "Gỗ tự nhiên",""));
+                "45*55*75 cm", "Gỗ tự nhiên", ""));
 
 //  1
         arrayList.add(new Product("product_3", "Bàn 1", "ban", "15.000",
                 "Germany", "Bàn làm việc hiện đại với thiết kế đơn giản nhưng tiện ích.",
-                "120*70*75 cm", "Nhựa cao cấp",""));
+                "120*70*75 cm", "Nhựa cao cấp", ""));
 
 //  2
         arrayList.add(new Product("product_4", "Bàn 2", "ban", "12.500",
                 "Sweden", "Bàn làm việc thông minh với nhiều ngăn kéo và kệ để sách.",
-                "100*60*80 cm", "Gỗ công nghiệp",""));
+                "100*60*80 cm", "Gỗ công nghiệp", ""));
 
 //  1
         arrayList.add(new Product("product_5", "Bàn ăn 1", "ban", "20.000",
                 "Italy", "Bàn ăn sang trọng với chất liệu gỗ và kính cao cấp.",
-                "150*90*75 cm", "Gỗ và kính",""));
+                "150*90*75 cm", "Gỗ và kính", ""));
 
 //  2
         arrayList.add(new Product("product_6", "Bàn ăn 2", "ban", "18.500",
                 "Spain", "Bàn ăn đẹp mắt với thiết kế độc đáo và chất liệu nhôm bền bỉ.",
-                "140*80*75 cm", "Nhôm",""));
+                "140*80*75 cm", "Nhôm", ""));
 
 //  1
         arrayList.add(new Product("product_7", "Kệ sách 1", "ke", "7.500",
                 "France", "Kệ sách đa năng với nhiều tầng để sắp xếp sách và đồ trang trí.",
-                "80*30*180 cm", "Gỗ công nghiệp",""));
+                "80*30*180 cm", "Gỗ công nghiệp", ""));
 
 //  2
         arrayList.add(new Product("product_8", "Kệ sách 2", "ke", "6.000",
                 "Vietnam", "Kệ sách đơn giản nhưng tiện lợi, phù hợp với mọi không gian.",
-                "60*25*150 cm", "MDF",""));
+                "60*25*150 cm", "MDF", ""));
 
 //  3
         arrayList.add(new Product("product_9", "Ghế 3", "ghe", "10.200",
                 "USA", "Ghế phòng khách đẹp mắt với chất liệu da cao cấp và khung gỗ chắc chắn.",
-                "55*65*85 cm", "Da và gỗ",""));
+                "55*65*85 cm", "Da và gỗ", ""));
 
 //  4
         arrayList.add(new Product("product_10", "Ghế 4", "ghe", "7.800",
                 "Japan", "Ghế làm việc thoải mái với thiết kế hiện đại và đệm lót êm ái.",
-                "48*58*80 cm", "Kim loại và vải",""));
+                "48*58*80 cm", "Kim loại và vải", ""));
 
 //  3
         arrayList.add(new Product("product_11", "Bàn 3", "ban", "13.750",
                 "Denmark", "Bàn làm việc nhỏ gọn với mặt bàn gỗ và khung thép chắc chắn.",
-                "90*50*75 cm", "Gỗ và thép",""));
+                "90*50*75 cm", "Gỗ và thép", ""));
 
 //  4
         arrayList.add(new Product("product_12", "Bàn 4", "ban", "16.300",
                 "Australia", "Bàn làm việc thông minh có thể điều chỉnh độ cao phù hợp với người sử dụng.",
-                "110*70*80 cm", "Gỗ và nhựa",""));
+                "110*70*80 cm", "Gỗ và nhựa", ""));
 
 //  3
         arrayList.add(new Product("product_13", "Bàn ăn 3", "ban", "22.500",
                 "China", "Bàn ăn hiện đại với chất liệu gỗ tự nhiên và thiết kế sang trọng.",
-                "160*100*75 cm", "Gỗ tự nhiên",""));
+                "160*100*75 cm", "Gỗ tự nhiên", ""));
 
 //  4
         arrayList.add(new Product("product_14", "Bàn ăn 4", "ban", "19.750",
                 "Canada", "Bàn ăn đa năng với khung kim loại và mặt đá cao cấp.",
-                "150*90*75 cm", "Kim loại và đá",""));
+                "150*90*75 cm", "Kim loại và đá", ""));
 
 //  3
         arrayList.add(new Product("product_15", "Kệ sách 3", "ke", "8.950",
                 "Germany", "Kệ sách treo tường với thiết kế đơn giản và tiện lợi.",
-                "100*20*180 cm", "Gỗ composite",""));
+                "100*20*180 cm", "Gỗ composite", ""));
 
 //  4
         arrayList.add(new Product("product_16", "Kệ sách 4", "ke", "5.600",
                 "Brazil", "Kệ sách hiện đại với nhiều ngăn đựng đồ và chất liệu gỗ tự nhiên.",
-                "80*25*150 cm", "Gỗ tự nhiên",""));
+                "80*25*150 cm", "Gỗ tự nhiên", ""));
 
 //  1
         arrayList.add(new Product("product_17", "Tủ 1", "tu", "14.500",
                 "Italy", "Tủ đựng đồ phòng khách với kiểu dáng sang trọng và nhiều ngăn tiện ích.",
-                "120*40*120 cm", "Gỗ và kính",""));
+                "120*40*120 cm", "Gỗ và kính", ""));
 
 //  2
         arrayList.add(new Product("product_18", "Tủ 2", "tu", "11.800",
                 "France", "Tủ để đồ trang trí phòng khách với chất liệu gỗ tự nhiên và thiết kế đẹp mắt.",
-                "100*30*150 cm", "Gỗ tự nhiên",""));
+                "100*30*150 cm", "Gỗ tự nhiên", ""));
 
 //  3
         arrayList.add(new Product("product_19", "Tủ 3", "tu", "18.200",
                 "Germany", "Tủ đựng quần áo phòng ngủ với nhiều ngăn kéo và kệ đựng rộng rãi.",
-                "180*60*200 cm", "Gỗ và kim loại",""));
+                "180*60*200 cm", "Gỗ và kim loại", ""));
 
 //  4
         arrayList.add(new Product("product_20", "Tủ 4", "tu", "9.750",
                 "Spain", "Tủ đựng đồ phòng khách với chất liệu gỗ công nghiệp và kiểu dáng hiện đại.",
-                "90*40*120 cm", "Gỗ công nghiệp",""));
+                "90*40*120 cm", "Gỗ công nghiệp", ""));
 
 //  5
         arrayList.add(new Product("product_21", "Tủ 5", "tu", "16.000",
                 "Japan", "Tủ để sách và đồ trang trí với chất liệu gỗ và mặt kính trong suốt.",
-                "120*35*180 cm", "Gỗ và kính",""));
+                "120*35*180 cm", "Gỗ và kính", ""));
 
 // Add more arrayList similarly...
-
-
-
-
 
 
         return arrayList;
     }
 
-    public void loadImg(Object img, ImageView view){
+    public void loadImg(Object img, ImageView view) {
         Glide.with(view.getContext()).load(img).into(view);
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -206,6 +208,7 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
+
     public String formatToCurrency(float value) {
         Locale locale = new Locale("vi", "VN"); // Set the Vietnamese locale
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
@@ -224,6 +227,7 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = getBinding(inflater, container);
+        viewModel= new ViewModelProvider(this).get(AppViewModel.class);
         return binding.getRoot();
 
     }
@@ -236,10 +240,9 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
     }
 
 
-
     public void addToCart(CardProduct product) {
-        String usID= preference.getString("UserID","");
-        if(!usID.isEmpty()) {
+        String usID = preference.getString("UserID", "");
+        if (!usID.isEmpty()) {
             database.getReference("Card")
                     .child(usID)
                     .child(product.Id)
@@ -247,57 +250,56 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
                     .addOnSuccessListener(unused -> {
                         showToast("Đã thêm vào giỏ hàng thành công");
                     }).addOnFailureListener(e -> {
-                        showToast("Error: "+e.getMessage());
+                        showToast("Error: " + e.getMessage());
                     });
-        }
-        else {
+        } else {
             showToast("User loggin is null");
         }
     }
 
-    public interface OnEventListener{
+    public interface OnEventListener {
         void onSuccess();
     }
-    public interface FectchCartByUser{
+
+    public interface FectchCartByUser {
         void onSuccess(ArrayList<CardProduct> products);
     }
+
     public void removeCard(CardProduct product, OnEventListener ev, boolean isPayment) {
-        String usID= preference.getString("UserID","");
-        if(!usID.isEmpty()){
+        String usID = preference.getString("UserID", "");
+        if (!usID.isEmpty()) {
             database.getReference("Card")
                     .child(usID)
                     .child(product.Id)
                     .removeValue()
                     .addOnSuccessListener(unused -> {
-                        if(!isPayment){
+                        if (!isPayment) {
                             showToast("Đã xóa thành công");
                         }
                         ev.onSuccess();
                     }).addOnFailureListener(e -> {
-                        showToast("Error: "+e.getMessage());
+                        showToast("Error: " + e.getMessage());
                     });
-        }
-        else {
+        } else {
             showToast("User loggin is null");
         }
     }
 
-    public void getListCard(FectchCartByUser arr){
-        String usID= preference.getString("UserID","");
-        if(!usID.isEmpty()){
+    public void getListCard(FectchCartByUser arr) {
+        String usID = preference.getString("UserID", "");
+        if (!usID.isEmpty()) {
             database.getReference("Card")
                     .child(usID)
                     .get()
                     .addOnSuccessListener(dataSnapshot -> {
-                        ArrayList<CardProduct> fetchPr= new ArrayList<>();
-                        for (DataSnapshot doc:dataSnapshot.getChildren()){
+                        ArrayList<CardProduct> fetchPr = new ArrayList<>();
+                        for (DataSnapshot doc : dataSnapshot.getChildren()) {
                             fetchPr.add(doc.getValue(CardProduct.class));
                         }
                         arr.onSuccess(fetchPr);
                     })
-                    .addOnFailureListener(e -> showToast("Err: "+e.getMessage()));
-        }
-        else {
+                    .addOnFailureListener(e -> showToast("Err: " + e.getMessage()));
+        } else {
             showToast("User loggin is null");
         }
     }
@@ -398,15 +400,15 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
         void onResult(String requestKey, Bundle bundle);
     }
 
-    public void getLove(Consumer<ArrayList<Product>> data){
-        String usID= preference.getString("UserID","");
-        if(!usID.isEmpty()) {
+    public void getLove(Consumer<ArrayList<Product>> data) {
+        String usID = preference.getString("UserID", "");
+        if (!usID.isEmpty()) {
             database.getReference("Love")
                     .child(usID)
                     .get()
                     .addOnSuccessListener(dataSnapshot -> {
-                        ArrayList<Product> arrProduct= new ArrayList<>();
-                        for (DataSnapshot ignored :dataSnapshot.getChildren()){
+                        ArrayList<Product> arrProduct = new ArrayList<>();
+                        for (DataSnapshot ignored : dataSnapshot.getChildren()) {
                             arrProduct.add(ignored.getValue(Product.class));
                         }
                         data.accept(arrProduct);
@@ -416,36 +418,39 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         }
     }
- public void getComment(Product id, Consumer <ArrayList<Comment>> cmt){
-    database.getReference("Comment").child(id.Id).get()
-            .addOnSuccessListener(dataSnapshot -> {
-                ArrayList<Comment> arrProduct= new ArrayList<>();
-                for (DataSnapshot ignored :dataSnapshot.getChildren()){
-                    arrProduct.add(ignored.getValue(Comment.class));
-                }
-                cmt.accept(arrProduct);
-            }).addOnFailureListener(e -> {
-                cmt.accept(null);
-            });
- }
- public void  addComment (String prID, Comment cmt, Consumer<Void> consumer){
-     DatabaseReference ref = database.getReference("Comment")
-             .child(prID)
-             .push();
-     cmt.Id= ref.getKey();
-     ref.setValue(cmt).addOnSuccessListener(new OnSuccessListener<Void>() {
-         @Override
-         public void onSuccess(Void unused) {
-             consumer.accept(null);
-         }
-     }).addOnFailureListener(new OnFailureListener() {
-         @Override
-         public void onFailure(@NonNull Exception e) {
-             showToast(e.getMessage());
-         }
-     });
- }
-    public void showNotification(String header,String content){
+
+    public void getComment(Product id, Consumer<ArrayList<Comment>> cmt) {
+        database.getReference("Comment").child(id.Id).get()
+                .addOnSuccessListener(dataSnapshot -> {
+                    ArrayList<Comment> arrProduct = new ArrayList<>();
+                    for (DataSnapshot ignored : dataSnapshot.getChildren()) {
+                        arrProduct.add(ignored.getValue(Comment.class));
+                    }
+                    cmt.accept(arrProduct);
+                }).addOnFailureListener(e -> {
+                    cmt.accept(null);
+                });
+    }
+
+    public void addComment(String prID, Comment cmt, Consumer<Void> consumer) {
+        DatabaseReference ref = database.getReference("Comment")
+                .child(prID)
+                .push();
+        cmt.Id = ref.getKey();
+        ref.setValue(cmt).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                consumer.accept(null);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                showToast(e.getMessage());
+            }
+        });
+    }
+
+    public void showNotification(String header, String content) {
         NotificationManager notificationManager = (NotificationManager) this.requireContext().getSystemService(Context.NOTIFICATION_SERVICE);
         String s = header.equals("") ? header = "Thông báo" : header;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -463,14 +468,13 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
     }
 
 
-
-    public void showYesNoDialog(Context context, String title, String message,Consumer<Void> event) {
+    public void showYesNoDialog(Context context, String title, String message, Consumer<Void> event) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setIcon(R.drawable.img);
         builder.setTitle(title);
         builder.setMessage(message);
         builder.setPositiveButton("Xác nhận", (dialog, which) -> {
-         event.accept(null);
+            event.accept(null);
             dialog.dismiss();
         });
         builder.setNegativeButton("No", (dialog, which) -> {
@@ -480,35 +484,36 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    public void onLoveSp(Product pr,Consumer<Boolean> status){
-        String usID= preference.getString("UserID","");
-        if(!usID.isEmpty()) {
+
+    public void onLoveSp(Product pr, Consumer<Boolean> status) {
+        String usID = preference.getString("UserID", "");
+        if (!usID.isEmpty()) {
             database.getReference("Love")
                     .child(usID)
                     .child(pr.Id)
                     .setValue(pr)
-                    .addOnSuccessListener(task->{
+                    .addOnSuccessListener(task -> {
                         status.accept(true);
-                    }).addOnFailureListener(e->{
-                        status.accept(false);
-                    });
-        }
-    }
-    public void onUnLove(Product pr,Consumer<Boolean> status){
-        String usID= preference.getString("UserID","");
-        if(!usID.isEmpty()) {
-            database.getReference("Love")
-                    .child(usID)
-                    .child(pr.Id)
-                    .removeValue()
-                    .addOnSuccessListener(task->{
-                        status.accept(true);
-                    }).addOnFailureListener(e->{
+                    }).addOnFailureListener(e -> {
                         status.accept(false);
                     });
         }
     }
 
+    public void onUnLove(Product pr, Consumer<Boolean> status) {
+        String usID = preference.getString("UserID", "");
+        if (!usID.isEmpty()) {
+            database.getReference("Love")
+                    .child(usID)
+                    .child(pr.Id)
+                    .removeValue()
+                    .addOnSuccessListener(task -> {
+                        status.accept(true);
+                    }).addOnFailureListener(e -> {
+                        status.accept(false);
+                    });
+        }
+    }
 
 
 }

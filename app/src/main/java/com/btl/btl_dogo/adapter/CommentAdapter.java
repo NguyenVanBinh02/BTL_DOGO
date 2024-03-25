@@ -18,5 +18,9 @@ public class CommentAdapter extends BaseAdapter<Comment, ListCommentBinding> {
     }
     @Override
     protected void bind(ListCommentBinding binding, Comment item, int position) {
+          /// m viet chuwa ma
+        // troi oi
+        binding.txtDanhgia.setText(item.cmt);
+        binding.txtName.setText(item.userName);
     }
 }

@@ -20,18 +20,22 @@ ActivityKhoiDongBinding binding;
         if (preference.getBoolean("khoidong",false)){
             if(!preference.getString("UserID","").equals("")){
                 startActivity(new Intent(KhoiDong.this,MainActivity.class));
+                finish();
             }
             else {
                 startActivity(new Intent(getApplicationContext(),Login.class));
+                finish();
             }
 
         }
         binding.txtFooter.setOnClickListener(v->
         {
             startActivity(new Intent(getApplicationContext(), Register.class));
+            finish();
         });
         binding.btnDangnhap.setOnClickListener(v->{
             startActivity(new Intent(getApplicationContext(),Login.class));
+            finish();
         });
     }
 }

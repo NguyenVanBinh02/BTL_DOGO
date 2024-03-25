@@ -38,6 +38,7 @@ public class Login extends BaseActivity<ActivityLoginBinding> {
         binding.txtFooter.setOnClickListener(v ->
         {
             startActivity(new Intent(getApplicationContext(), Register.class));
+
         });
         binding.backLogin.setOnClickListener(v -> {
             startActivity(new Intent(getApplicationContext(), KhoiDong.class));
