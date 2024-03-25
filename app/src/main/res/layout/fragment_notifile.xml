@@ -53,8 +53,9 @@
         android:layout_marginVertical="@dimen/_8sdp"
         android:background="@drawable/rounded_edittext_bg"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/_4sdp"
-        android:text="Cap nhat don hang"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:paddingStart="@dimen/_4sdp"
+        android:text="Cập nhật trạng thái đơn hàng"
         android:textSize="@dimen/_16sdp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/nav_Profile" />

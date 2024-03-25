@@ -11,6 +11,7 @@ import com.btl.btl_dogo.adapter.TagAdapter;
 import com.btl.btl_dogo.base.AppViewModel;
 import com.btl.btl_dogo.base.BaseFragment;
 import com.btl.btl_dogo.databinding.FragmentHomeBinding;
+import com.btl.btl_dogo.model.CardProduct;
 import com.btl.btl_dogo.model.Product;
 import com.btl.btl_dogo.model.Tag;
 
@@ -45,7 +46,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements T
             @Override
             public void onLove(Product pr) {
                 onLoveSp(pr, aBoolean -> {
-                    if(aBoolean){
+                    if (aBoolean) {
                         showToast("Đã thêm vào danh sách yêu thích!");
                     }
                 });
@@ -53,17 +54,18 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements T
 
             @Override
             public void onDetail(Product product) {
-                replaceFragment(new DetailsFragment(product),android.R.id.content,true);
+                replaceFragment(new DetailsFragment(product), android.R.id.content, true);
 
             }
 
             @Override
             public void onAddCart(Product product) {
-                addToCart(product);
+
+                addToCart(new CardProduct(product.Id, product, 1, product.Gia, false));
             }
         });
         binding.imgCart.setOnClickListener(v -> {
-            replaceFragment(new CartFragment(),android.R.id.content,true);
+            replaceFragment(new CartFragment(), android.R.id.content, true);
         });
 
 
@@ -94,7 +96,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements T
         binding.listProduct.setAdapter(productAdater);
         productAdater.setItems(getListProduct());
     }
-
 
 
     @Override

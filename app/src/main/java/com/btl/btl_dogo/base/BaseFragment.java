@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Consumer;
@@ -22,11 +23,17 @@ import androidx.viewbinding.ViewBinding;
 
 import com.btl.btl_dogo.R;
 import com.btl.btl_dogo.model.CardProduct;
+import com.btl.btl_dogo.model.Comment;
 import com.btl.btl_dogo.model.Product;
 import com.btl.btl_dogo.model.User;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.checkerframework.checker.units.qual.C;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -230,17 +237,13 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
 
-    public void addToCart(Product product) {
-        CardProduct cardProduct= new CardProduct();
-        cardProduct.Count=1;
-        cardProduct.Id=product.Id;
-        cardProduct.Price=product.Gia;
-        cardProduct.Product=product;
-        if(userLogin!=null){
+    public void addToCart(CardProduct product) {
+        String usID= preference.getString("UserID","");
+        if(!usID.isEmpty()) {
             database.getReference("Card")
-                    .child(userLogin.getId())
-                    .child(cardProduct.Id)
-                    .setValue(cardProduct)
+                    .child(usID)
+                    .child(product.Id)
+                    .setValue(product)
                     .addOnSuccessListener(unused -> {
                         showToast("Đã thêm vào giỏ hàng thành công");
                     }).addOnFailureListener(e -> {
@@ -413,7 +416,35 @@ public FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         }
     }
-
+ public void getComment(Product id, Consumer <ArrayList<Comment>> cmt){
+    database.getReference("Comment").child(id.Id).get()
+            .addOnSuccessListener(dataSnapshot -> {
+                ArrayList<Comment> arrProduct= new ArrayList<>();
+                for (DataSnapshot ignored :dataSnapshot.getChildren()){
+                    arrProduct.add(ignored.getValue(Comment.class));
+                }
+                cmt.accept(arrProduct);
+            }).addOnFailureListener(e -> {
+                cmt.accept(null);
+            });
+ }
+ public void  addComment (String prID, Comment cmt, Consumer<Void> consumer){
+     DatabaseReference ref = database.getReference("Comment")
+             .child(prID)
+             .push();
+     cmt.Id= ref.getKey();
+     ref.setValue(cmt).addOnSuccessListener(new OnSuccessListener<Void>() {
+         @Override
+         public void onSuccess(Void unused) {
+             consumer.accept(null);
+         }
+     }).addOnFailureListener(new OnFailureListener() {
+         @Override
+         public void onFailure(@NonNull Exception e) {
+             showToast(e.getMessage());
+         }
+     });
+ }
     public void showNotification(String header,String content){
         NotificationManager notificationManager = (NotificationManager) this.requireContext().getSystemService(Context.NOTIFICATION_SERVICE);
         String s = header.equals("") ? header = "Thông báo" : header;

@@ -58,7 +58,7 @@
         android:gravity="center_vertical"
         android:paddingStart="@dimen/_10sdp"
         android:background="@drawable/rounded_edittext_bg"
-        android:text="Danh sach san pham"
+        android:text="Danh sách sản phẩm"
         android:textSize="@dimen/_16sdp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/nav_Details"
@@ -113,7 +113,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tong thanh toan: "
+                android:text="Tổng thanh toan: "
                 android:textSize="@dimen/_16sdp" />
 
             <TextView
@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_8sdp"
             android:backgroundTint="#DE772C"
-            android:text="Mua hang"
+            android:text="Mua hàng"
             android:textSize="@dimen/_16sdp" />
 
     </LinearLayout>

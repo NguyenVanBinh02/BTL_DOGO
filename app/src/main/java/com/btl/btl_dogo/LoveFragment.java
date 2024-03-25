@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.btl.btl_dogo.adapter.LoveAdapter;
 import com.btl.btl_dogo.base.BaseFragment;
 import com.btl.btl_dogo.databinding.FragmentLoveBinding;
+import com.btl.btl_dogo.model.CardProduct;
 import com.btl.btl_dogo.model.Product;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class LoveFragment extends BaseFragment<FragmentLoveBinding> {
 
             @Override
             public void onAddCart(Product product) {
-                addToCart(product);
+                addToCart( new CardProduct(product.Id, product,1,product.Gia,false));
             }
         });
         getLove(products -> {

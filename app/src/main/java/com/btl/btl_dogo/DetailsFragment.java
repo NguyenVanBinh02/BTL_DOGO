@@ -13,6 +13,7 @@ import com.btl.btl_dogo.adapter.SPLQAdapter;
 import com.btl.btl_dogo.base.BaseAdapter;
 import com.btl.btl_dogo.base.BaseFragment;
 import com.btl.btl_dogo.databinding.FragmentDetailsBinding;
+import com.btl.btl_dogo.model.CardProduct;
 import com.btl.btl_dogo.model.Comment;
 import com.btl.btl_dogo.model.Product;
 
@@ -31,10 +32,17 @@ public class DetailsFragment extends BaseFragment<FragmentDetailsBinding> {
     protected FragmentDetailsBinding getBinding(LayoutInflater inflater, ViewGroup container) {
         return FragmentDetailsBinding.inflate(getLayoutInflater());
     }
-
+    CardProduct cart;
     @Override
     protected void initView() {
-
+        binding.btnThemSP.setOnClickListener(v->{
+            addToCart(cart);
+        });
+        binding.btnChiTiet.setOnClickListener(v->{
+            replaceFragment( new WriteCommentFragment(product),android.R.id.content,false);
+        });
+        cart = new CardProduct(product.Id, product,1,product.Gia,false);
+        binding.txtSL.setText(""+ cart.Count);
         splqAdapter = new SPLQAdapter(new SPLQAdapter.ProductEvent() {
             @Override
             public void onDetail(Product product) {
@@ -52,26 +60,20 @@ public class DetailsFragment extends BaseFragment<FragmentDetailsBinding> {
         binding.txtChatLieu.setText("Chất liệu: "+product.ChatLieu);
         binding.txtXuatSu.setText("Nơi sản xuất: "+product.NoiSX);
         ArrayList<Comment> listComment = new ArrayList<>();
-        listComment.add(new Comment("", "Nguyen Van Binh", "", "Kệ làm bằng gỗ mang vẻ đẹp hài hòa, tinh tế tự nhiên và bền đẹp"));
-        listComment.add(new Comment("", "Nguyen Thi Minh Anh", "", "Chất liệu gỗ tự nhiên nhẵn mịn, chống ẩm tốt cộng thêm được phủ bóng bên ngoài giúp việc chùi, vệ sinh sản phẩm trở nên dễ dàng"));
-        listComment.add(new Comment("", "Nguyen Thi Thanh Lam", "", "kiểu dáng thiết kế lẫn chất liệu được sử dụng để gia công, sản xuất"));
-        listComment.add(new Comment("", "Nguyen Van Binh", "", "Kệ làm bằng gỗ mang vẻ đẹp hài hòa, tinh tế tự nhiên và bền đẹp"));
-        listComment.add(new Comment("", "Nguyen Thi Minh Anh", "", "Chất liệu gỗ tự nhiên nhẵn mịn, chống ẩm tốt cộng thêm được phủ bóng bên ngoài giúp việc chùi, vệ sinh sản phẩm trở nên dễ dàng"));
-        listComment.add(new Comment("", "Nguyen Thi Thanh Lam", "", "kiểu dáng thiết kế lẫn chất liệu được sử dụng để gia công, sản xuất"));
 
         binding.listComment.setAdapter(commentAdapter);
         commentAdapter.setItems(listComment);
         binding.txtAdd.setOnClickListener(v -> {
-            int add = Integer.parseInt(binding.txtSL.getText().toString());
-            add ++;
-            binding.txtSL.setText(String.valueOf(add));
+           cart.Count++;
+            binding.txtSL.setText(""+ cart.Count);
         });
         binding.txtRemove.setOnClickListener(v -> {
-            int remove = Integer.parseInt(binding.txtSL.getText().toString());
-            if (remove >1) {
-                remove--;
-                binding.txtSL.setText(String.valueOf(remove));
+            cart.Count--;
+
+            if (cart.Count <=1){
+                cart.Count =1;
             }
+            binding.txtSL.setText(""+ cart.Count);
         });
     }
     public ArrayList<Product> getSPLQ (){
