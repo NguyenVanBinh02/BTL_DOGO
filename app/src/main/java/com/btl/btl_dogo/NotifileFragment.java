@@ -1,9 +1,11 @@
 package com.btl.btl_dogo;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.util.Consumer;
 
 import com.btl.btl_dogo.adapter.NotificationAdapter;
@@ -18,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class NotifileFragment extends BaseFragment<FragmentNotifileBinding> {
 
@@ -28,11 +31,14 @@ public class NotifileFragment extends BaseFragment<FragmentNotifileBinding> {
 
     private NotificationAdapter notificationAdapter;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void initView() {
         notificationAdapter = new NotificationAdapter();
         binding.rcvNotification.setAdapter(notificationAdapter);
         getAllNoti(notifications -> {
+            notifications.sort((o1, o2) -> o2.Time.compareTo(o2.Time));
             notificationAdapter.setItems(notifications);
         });
 
